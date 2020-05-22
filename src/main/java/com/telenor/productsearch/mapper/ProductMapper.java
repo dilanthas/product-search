@@ -9,14 +9,20 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.telenor.productsearch.constants.Constants.COLOR;
+import static com.telenor.productsearch.constants.Constants.GB_LIMIT;
+
 @Component
 public class ProductMapper {
 
-	private static String COLOR = "color";
-	private static String GB_LIMIT = "gb_limit";
-	@Autowired
+
+
     private ModelMapper modelMapper;
 
+	@Autowired
+	public ProductMapper(ModelMapper modelMapper){
+		this.modelMapper = modelMapper;
+	}
     public List<ProductDTO> mapToDtoList(List<Product> products) {
         return products.stream().map(product -> mapToDto(product)).collect(Collectors.toList());
     }

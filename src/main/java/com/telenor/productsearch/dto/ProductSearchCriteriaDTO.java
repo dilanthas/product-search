@@ -67,7 +67,7 @@ public class ProductSearchCriteriaDTO {
 				|| (this.color != null && this.color.equals(other.color));
 
 		return this.minPrice.equals(other.minPrice) && typeEquals && cityEquals && propertyEquals && colorEquals
-				&& this.maxPrice.equals(other.maxPrice) && this.maxGBLimit.equals(other.maxGBLimit);
+				&& this.maxPrice.equals(other.maxPrice) && this.maxGBLimit.equals(other.maxGBLimit) && this.minGBLimit.equals(other.minGBLimit);
 	}
 
 }

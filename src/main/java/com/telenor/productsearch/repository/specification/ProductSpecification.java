@@ -16,7 +16,7 @@ public class ProductSpecification {
 	 * @return
 	 */
     public static Specification<Product> withType(String type){
-        if (type == null) {
+        if (type == null || type.length() == 0) {
             return null;
         } else {
             return (root, query, cb) -> cb.equal(root.get("type"), type);
@@ -29,7 +29,7 @@ public class ProductSpecification {
 	 * @return
 	 */
     public static Specification<Product> withMinPrice(BigDecimal minPrice ){
-        if (minPrice == null) {
+        if (minPrice == null ) {
             return null;
         } else {
             return (root, query, cb) -> cb.greaterThanOrEqualTo(root.get("price"), minPrice);
@@ -55,7 +55,7 @@ public class ProductSpecification {
 	 * @return
 	 */
 	public static Specification<Product> withCityName(String cityName){
-        if (cityName == null) {
+        if (cityName == null || cityName.length() == 0) {
             return null;
         } else {
             return (root, query, cb) -> cb.equal(root.get("cityName"), cityName);
@@ -68,7 +68,7 @@ public class ProductSpecification {
 	 * @return
 	 */
 	public static Specification<Product> withProperty(String property){
-        if (property == null) {
+        if (property == null || property.length() == 0) {
             return null;
         } else {
             return (root, query, cb) -> cb.equal(root.get("property"), property);
@@ -81,7 +81,7 @@ public class ProductSpecification {
 	 * @return
 	 */
 	public static Specification<Product> withColor(String color){
-        if (color == null) {
+        if (color == null || color.length() == 0) {
             return null;
         } else {
             return (root, query, cb) -> cb.equal(root.get("color"), color);

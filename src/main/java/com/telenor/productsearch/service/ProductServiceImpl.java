@@ -39,6 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
 	/**
 	 * Search products for given criteria
+	 *
 	 * @param searchCriteriaDTO
 	 * @return
 	 */
@@ -46,24 +47,36 @@ public class ProductServiceImpl implements ProductService {
 	public ProductResponse<List<ProductDTO>> getProducts(ProductSearchCriteriaDTO searchCriteriaDTO) {
 
 		List<Product> products = repository.findAll(
-				Specification.where(withType(searchCriteriaDTO.getType())).and(withMinPrice(searchCriteriaDTO.getMinPrice()))
-						.and(withMaxPrice(searchCriteriaDTO.getMaxPrice())).and(withCityName(searchCriteriaDTO.getCity())).and(withProperty(searchCriteriaDTO.getProperty())).and(withMaxGB(searchCriteriaDTO.getMaxGBLimit())).and(withMinGB(searchCriteriaDTO.getMinGBLimit())).and(withColor(searchCriteriaDTO.getColor())));
+				getProductSpecification(searchCriteriaDTO));
 
 		ProductResponse<List<ProductDTO>> response = new ProductResponse<>();
-		if(products.isEmpty()){
+		if (products.isEmpty()) {
 
 			logger.debug("No Results found ");
 
 			response.setMessage(NO_DATA_FOUND);
 			response.setData(new ArrayList<>());
 
-		}else{
+		} else {
 			logger.debug("Number of Results found : {}", products.size());
 			response.setData(mapper.mapToDtoList(products));
-			response.setMessage(String.format(RESULT_COUNT,products.size()));
+			response.setMessage(String.format(RESULT_COUNT, products.size()));
 		}
 
 		return response;
+	}
+
+	/**
+	 * Build the filtering criteria
+	 * @param searchCriteriaDTO
+	 * @return
+	 */
+	protected Specification<Product> getProductSpecification(ProductSearchCriteriaDTO searchCriteriaDTO) {
+
+		return Specification.where(withType(searchCriteriaDTO.getType())).and(withMinPrice(searchCriteriaDTO.getMinPrice()))
+				.and(withMaxPrice(searchCriteriaDTO.getMaxPrice())).and(withCityName(searchCriteriaDTO.getCity()))
+				.and(withProperty(searchCriteriaDTO.getProperty())).and(withMaxGB(searchCriteriaDTO.getMaxGBLimit()))
+				.and(withMinGB(searchCriteriaDTO.getMinGBLimit())).and(withColor(searchCriteriaDTO.getColor()));
 	}
 
 }
